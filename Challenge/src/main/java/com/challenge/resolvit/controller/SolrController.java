@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.challenge.resolvit.model.ChallengeResponse;
-import com.challenge.resolvit.model.SentenceSolrDTO;
+import com.challenge.resolvit.model.WordSolrDTO;
 import com.challenge.resolvit.services.SentenceService;
 
 @RestController
@@ -22,7 +22,7 @@ public class SolrController {
 
 
 	@RequestMapping(value = "/allWords", method = RequestMethod.GET)
-	public Iterable<SentenceSolrDTO> findByRepo() throws IOException {
+	public Iterable<WordSolrDTO> findByRepo() throws IOException {
 		return sentenceService.findAllWords();
 	}
 

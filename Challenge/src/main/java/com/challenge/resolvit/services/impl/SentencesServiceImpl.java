@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.challenge.resolvit.model.ChallengeResponse;
 import com.challenge.resolvit.model.ChallengeResponse.WordDTO;
-import com.challenge.resolvit.model.SentenceSolrDTO;
+import com.challenge.resolvit.model.WordSolrDTO;
 import com.challenge.resolvit.repository.SentenceRepository;
 import com.challenge.resolvit.services.SentenceService;
 
@@ -29,7 +29,7 @@ public class SentencesServiceImpl implements SentenceService {
 	private static Logger log = LoggerFactory.getLogger(SentencesServiceImpl.class);
 	
 	@Override
-	public Iterable<SentenceSolrDTO> findAllWords() {
+	public Iterable<WordSolrDTO> findAllWords() {
 		return sentenceRepository.findAll();
 	}
 
@@ -42,14 +42,14 @@ public class SentencesServiceImpl implements SentenceService {
 	public void insertSentences(String request) {
 		log.debug("Inserting the following sentence: " + request);
 		
-		List<SentenceSolrDTO> sentenceList = new ArrayList<SentenceSolrDTO>();
+		List<WordSolrDTO> sentenceList = new ArrayList<WordSolrDTO>();
 		String[] sentences = request.split("\\.");
 		for(int index = 0; index < sentences.length; index ++) {
 			String[] words = sentences[index].split("\\s+");
 			for (String word : words) {
-				SentenceSolrDTO model = new SentenceSolrDTO();
+				WordSolrDTO model = new WordSolrDTO();
 				model.setId(UUID.randomUUID().getMostSignificantBits());
-				model.setSentence(word);
+				model.setWord(word);
 				model.setSentenceOrder(index);
 				sentenceList.add(model);
 			}
@@ -64,15 +64,15 @@ public class SentencesServiceImpl implements SentenceService {
 	public ChallengeResponse getWordsCount() {
 		log.debug("Getting words count");
 		ChallengeResponse response = new ChallengeResponse();
-		FacetPage<SentenceSolrDTO> facetSentences = sentenceRepository.findAllFacetOnSentence(new PageRequest(0, 50, null));
+		FacetPage<WordSolrDTO> facetSentences = sentenceRepository.findAllFacetOnWord(new PageRequest(0, 50, null));
 
 		for (Page<FacetFieldEntry> page : facetSentences.getFacetResultPages()) {
 			for (FacetFieldEntry entry : page) {
-				List<SentenceSolrDTO> sentences = sentenceRepository.findBySentence(entry.getValue());
+				List<WordSolrDTO> sentences = sentenceRepository.findByWord(entry.getValue());
 				WordDTO wordDto = new WordDTO();
 				wordDto.setTotalOccurrances(entry.getValueCount());
 				wordDto.setWord(entry.getValue());
-				for (SentenceSolrDTO sentence : sentences) {
+				for (WordSolrDTO sentence : sentences) {
 					wordDto.addSentenceIndex(sentence.getSentenceOrder());
 				}
 

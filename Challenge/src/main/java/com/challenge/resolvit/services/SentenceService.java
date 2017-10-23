@@ -1,10 +1,10 @@
 package com.challenge.resolvit.services;
 
 import com.challenge.resolvit.model.ChallengeResponse;
-import com.challenge.resolvit.model.SentenceSolrDTO;
+import com.challenge.resolvit.model.WordSolrDTO;
 
 public interface SentenceService {
-	public Iterable<SentenceSolrDTO> findAllWords();
+	public Iterable<WordSolrDTO> findAllWords();
 	
 	public void cleanRepository();
 	

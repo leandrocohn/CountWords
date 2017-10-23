@@ -8,14 +8,14 @@ import org.springframework.data.solr.repository.Facet;
 import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
-import com.challenge.resolvit.model.SentenceSolrDTO;
+import com.challenge.resolvit.model.WordSolrDTO;
 
-public interface SentenceRepository extends SolrCrudRepository<SentenceSolrDTO, String> {
+public interface SentenceRepository extends SolrCrudRepository<WordSolrDTO, String> {
 
 	@Query(value = "*:*")
-	@Facet(fields = { "sentence" }, limit = 999)
-	FacetPage<SentenceSolrDTO> findAllFacetOnSentence(Pageable page);
+	@Facet(fields = { "word" }, limit = 999)
+	FacetPage<WordSolrDTO> findAllFacetOnWord(Pageable page);
 
-    public List<SentenceSolrDTO> findBySentence(String sentence);
+    public List<WordSolrDTO> findByWord(String word);
 
 }

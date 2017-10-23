@@ -1,5 +1,5 @@
 # CountWords
-This is an application that counts the occurrences of the words in a specific text
+This is an application that counts the occurrences of words in a specific text
 
 ## Install instructions
 1- Have installed and configured JDK 8. Official link: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
